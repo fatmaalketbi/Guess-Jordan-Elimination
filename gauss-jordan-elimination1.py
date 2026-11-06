@@ -1,15 +1,13 @@
-#%%
+
 from fractions import Fraction
 from copy import deepcopy
 
-
 def F(value):
-    """Convert an integer, string, or Fraction to an exact Fraction."""
+    #Convert an integer, string, or Fraction to an exact Fraction.
     return value if isinstance(value, Fraction) else Fraction(value)
 
-
 def as_fraction_matrix(matrix):
-    """Return a deep copy of matrix with every entry stored as a Fraction."""
+    #Return a deep copy of matrix with every entry stored as a Fraction.
     if not matrix or not matrix[0]:
         raise ValueError("The matrix must be non-empty.")
     width = len(matrix[0])
@@ -19,17 +17,15 @@ def as_fraction_matrix(matrix):
 
 
 def show_matrix(matrix):
-    """Print a matrix in a compact, readable form."""
+    #Print a matrix in a compact, readable form.
     for row in matrix:
         print("[ " + "  ".join(f"{str(x):>7}" for x in row) + " ]")
     print()
 
-#%%
 def swap_rows(M, i, j):
     A = deepcopy(M)
     A[i], A[j] = A[j], A[i]
     return A
-
 
 def scale_row(M, i, k):
     k = F(k)
@@ -49,7 +45,6 @@ def replace_row(M, i, j, k):
         for col in range(len(A[i]))
     ]
     return A
-#%%
 # Quick checks for Part 1
 M0 = as_fraction_matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 assert swap_rows(M0, 0, 2) == as_fraction_matrix([[7, 8, 9], [4, 5, 6], [1, 2, 3]])
@@ -57,7 +52,6 @@ assert scale_row(M0, 1, Fraction(1, 2))[1] == [2, Fraction(5, 2), 3]
 assert replace_row(M0, 2, 0, -7)[2] == [0, -6, -12]
 print("Part 1 checks passed.")
 
-#%%
 def gauss_jordan(augmented, show_steps=False):
     M = as_fraction_matrix(augmented)
     operations = []
@@ -121,7 +115,7 @@ def gauss_jordan(augmented, show_steps=False):
             break
 
     return M, operations
-#%%
+
 # Lecture-style check: this system has the solution (-2, 2).
 lecture_system = [[1, 2, 2], [3, 5, 4]]
 lecture_rref, lecture_operations = gauss_jordan(lecture_system)
@@ -129,7 +123,7 @@ show_matrix(lecture_rref)
 assert lecture_rref == as_fraction_matrix([[1, 0, -2], [0, 1, 2]])
 print("Part 2 check passed.")
 
-#%%
+
 def nonzero_row_count(matrix):
     count = 0
     for row in matrix:
@@ -157,7 +151,7 @@ def classify_system(rref_augmented):
         "number_of_variables": number_of_variables,
         "classification": classification
     }
-#%%
+
 systems = {
     "System A": [
         [1, 2, -1, 3],
@@ -175,7 +169,7 @@ systems = {
         [0, 1, -1, 0],
     ],
 }
-#%%
+
 # TODO: analyze System A, System B, and System C.
 for name, augmented in systems.items():
     print(name)
@@ -212,7 +206,7 @@ for name, augmented in systems.items():
 
     print("-" * 40)
 
-#%%
+
 A_homogeneous = [
     [1, 2, -1, 3],
     [2, 4, -2, 6],
@@ -248,7 +242,7 @@ else:
 print("Vector form:")
 print("x = s(3, -1, 1, 0) + t(-5, 1, 0, 1)")
 
-#%%
+
 mysystem = [
     [0, 1, 1, 2],
     [1, 1, 0, 3],
